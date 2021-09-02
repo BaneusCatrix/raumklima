@@ -31,7 +31,7 @@ def min_max_check(value, min_val, max_val) -> bool:
 
 
 def check(args: argparse.Namespace, temp: Optional[float], humi: Optional[int]) -> int:
-    output_format = '{{}}: {{}}; channel = {} -> temp = {}, humi = {}'.format(args.channel, temp, humi)
+    output_format = '{{}}: {{}}; channel = {} -> temp = {}, humi = {} | \'temp_channel{}\'={};{};{};0;100'.format(args.channel, temp, humi, args.channel, temp, args.min_warn_temp, args.max_warn_temp)
 
     if temp != 'unknown':
         if not min_max_check(temp, args.min_temp, args.max_temp):
@@ -100,4 +100,5 @@ if __name__ == '__main__':
     parser.add_argument('--max-hum', type=int, help='Maximalluftfeuchte (numerische Werte) - Überschreitung ist Critical')
     parser.add_argument('--min-warn-hum', type=int, help='Mindestluftfeuchte Warnung (numerische Werte) - Unterschreitung ist Warnung')
     parser.add_argument('--max-warn-hum', type=int, help='Maximalluftfeuchte Warnung (numerische Werte) - Überschreitung ist Warnung')
+    parser.add_argument('-p', '--performance', type=int, required=False, help='Ausgabe Performance-Daten')
     handle_request(parser.parse_args())
